@@ -1,9 +1,11 @@
+import { StatusBar } from 'expo-status-bar';
 import {
     HostGrotesk_400Regular,
     HostGrotesk_500Medium,
     HostGrotesk_600SemiBold,
     useFonts,
 } from '@expo-google-fonts/host-grotesk';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { Greetings } from './screens/Greetings';
 
@@ -18,5 +20,10 @@ export function App() {
         return null;
     }
 
-    return <Greetings />;
+    return (
+        <SafeAreaProvider>
+            <Greetings />
+            <StatusBar />
+        </SafeAreaProvider>
+    );
 }

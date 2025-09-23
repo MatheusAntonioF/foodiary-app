@@ -1,5 +1,5 @@
 import { Text } from 'react-native';
-import { theme } from '@ui/theme';
+import { theme } from '@ui/styles/theme';
 
 interface IAppTextProps extends React.ComponentProps<typeof Text> {
     size?: keyof typeof theme.fontSize;
