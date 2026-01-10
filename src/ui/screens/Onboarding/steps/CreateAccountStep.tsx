@@ -1,23 +1,94 @@
-import { View } from 'react-native';
-import { AppText } from '@ui/components/AppText';
-import { useOnboarding } from '../context/useOnboarding';
 import { Button } from '@ui/components/Button';
+import {
+    Step,
+    StepContent,
+    StepFooter,
+    StepHeader,
+    StepSubTitle,
+    StepTitle,
+} from '../components/Step';
+import { FormGroup } from '@ui/components/FormGroup';
+import { Input } from '@ui/components/Input';
+import React, { useRef } from 'react';
+import { Alert, TextInput, View } from 'react-native';
 
 export function CreateAccountStep() {
-    const { currentStepIndex, nextStep } = useOnboarding();
+    const emailInputRef = useRef<TextInput>(null);
+    const passwordInputRef = useRef<TextInput>(null);
+    const confirmPasswordInputRef = useRef<TextInput>(null);
+
+    const handleSubmit = () => {
+        Alert.alert('Enviar');
+    };
 
     return (
-        <View
-            style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
-        >
-            <AppText size="3xl" weight="semiBold">
-                CreateAccountStep
-            </AppText>
-
-            <View>
-                <AppText>{currentStepIndex}</AppText>
-                <Button onPress={nextStep}>Avançar</Button>
-            </View>
-        </View>
+        <Step>
+            <StepHeader>
+                <StepTitle>Crie sua conta</StepTitle>
+                <StepSubTitle>Para poder visualizar seu progresso</StepSubTitle>
+            </StepHeader>
+            <StepContent>
+                <View style={{ gap: 24 }}>
+                    <FormGroup label="Nome">
+                        <Input
+                            autoFocus
+                            placeholder="João Silva"
+                            autoCapitalize="words"
+                            autoCorrect={false}
+                            autoComplete="name"
+                            returnKeyType="next"
+                            onSubmitEditing={() =>
+                                emailInputRef.current?.focus()
+                            }
+                        />
+                    </FormGroup>
+                    <FormGroup label="E-mail">
+                        <Input
+                            ref={emailInputRef}
+                            placeholder="joaosilva@gmail.com"
+                            keyboardType="email-address"
+                            autoCapitalize="none"
+                            autoCorrect={false}
+                            autoComplete="email"
+                            returnKeyType="next"
+                            onSubmitEditing={() => {
+                                passwordInputRef.current?.focus();
+                            }}
+                        />
+                    </FormGroup>
+                    <FormGroup label="Senha">
+                        <Input
+                            ref={passwordInputRef}
+                            placeholder="Mínimo 8 caracteres"
+                            secureTextEntry
+                            autoCapitalize="none"
+                            autoCorrect={false}
+                            autoComplete="new-password"
+                            returnKeyType="next"
+                            onSubmitEditing={() => {
+                                confirmPasswordInputRef.current?.focus();
+                            }}
+                        />
+                    </FormGroup>
+                    <FormGroup label="Confirmar Senha">
+                        <Input
+                            ref={confirmPasswordInputRef}
+                            placeholder="Mínimo 8 caracteres"
+                            secureTextEntry
+                            autoCapitalize="none"
+                            autoCorrect={false}
+                            autoComplete="new-password"
+                            returnKeyType="done"
+                            onSubmitEditing={handleSubmit}
+                        />
+                    </FormGroup>
+                </View>
+            </StepContent>
+            <StepFooter align="start">
+                <Button onPress={handleSubmit} style={{ width: '100%' }}>
+                    Criar conta
+                </Button>
+            </StepFooter>
+        </Step>
     );
 }
