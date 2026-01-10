@@ -4,7 +4,7 @@ import { useOnboarding } from '../context/useOnboarding';
 import { Button } from '@ui/components/Button';
 
 export function GoalStep() {
-    const { currentStepIndex, nextStep, previousStep } = useOnboarding();
+    const { currentStepIndex, nextStep } = useOnboarding();
 
     return (
         <View
@@ -15,7 +15,6 @@ export function GoalStep() {
             </AppText>
 
             <View>
-                <Button onPress={previousStep}>Voltar</Button>
                 <AppText>{currentStepIndex}</AppText>
                 <Button onPress={nextStep}>Avançar</Button>
             </View>

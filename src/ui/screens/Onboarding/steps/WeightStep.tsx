@@ -7,7 +7,7 @@ export function WeightStep() {
             style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
         >
             <AppText size="3xl" weight="semiBold">
-                Onboarding
+                WeightStep
             </AppText>
         </View>
     );

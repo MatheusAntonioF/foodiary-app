@@ -1,14 +1,23 @@
 import { View } from 'react-native';
 import { AppText } from '@ui/components/AppText';
+import { useOnboarding } from '../context/useOnboarding';
+import { Button } from '@ui/components/Button';
 
 export function GenderStep() {
+    const { currentStepIndex, nextStep } = useOnboarding();
+
     return (
         <View
             style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
         >
             <AppText size="3xl" weight="semiBold">
-                gender step
+                GenderStep
             </AppText>
+
+            <View>
+                <AppText>{currentStepIndex}</AppText>
+                <Button onPress={nextStep}>Avançar</Button>
+            </View>
         </View>
     );
 }

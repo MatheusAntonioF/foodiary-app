@@ -7,7 +7,7 @@ import {
 import { Greetings } from '@ui/screens/Greetings';
 import { Onboarding } from '@ui/screens/Onboarding';
 
-type AuthStackParamList = {
+export type AuthStackParamList = {
     Greetings: undefined;
     Onboarding: undefined;
 };

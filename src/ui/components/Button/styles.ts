@@ -25,6 +25,9 @@ export const buttonStyles = createVariants({
             secondary: {
                 backgroundColor: theme.colors.gray['300'],
             },
+            ghost: {
+                backgroundColor: 'transparent',
+            },
         },
         size: {
             default: {

@@ -4,9 +4,12 @@ import { orderedSteps } from '../steps';
 import { onboardingNavigation } from '../OnboardingStack';
 
 import { OnboardingContext } from '.';
+import { useNavigation } from '@react-navigation/native';
+import type { AuthStackNavigationProps } from '@app/navigation/AuthStack';
 
 export function OnboardingProvider({ children }: { children: ReactNode }) {
     const [currentStepIndex, setCurrentStepIndex] = useState(0);
+    const { goBack } = useNavigation<AuthStackNavigationProps>();
 
     const nextStep = useCallback(() => {
         const nextStepIndex = currentStepIndex + 1;
@@ -24,12 +27,13 @@ export function OnboardingProvider({ children }: { children: ReactNode }) {
         const previousStepIndex = currentStepIndex - 1;
 
         if (!onboardingNavigation.canGoBack()) {
+            goBack();
             return;
         }
 
         onboardingNavigation.goBack();
         setCurrentStepIndex(previousStepIndex);
-    }, [currentStepIndex]);
+    }, [currentStepIndex, goBack]);
 
     return (
         <OnboardingContext.Provider
