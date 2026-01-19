@@ -33,6 +33,7 @@ export const buttonStyles = createVariants({
             default: {
                 paddingHorizontal: 24,
                 paddingVertical: 14,
+                minHeight: 52,
             },
             icon: {
                 width: 48,

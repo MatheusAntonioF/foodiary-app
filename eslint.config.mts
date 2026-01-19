@@ -11,7 +11,7 @@ export default defineConfig([
         rules: {
             quotes: ['error', 'single'],
             semi: ['error', 'always'],
-            'comma-dangle': ['error', 'always-multiline'],
+            // 'comma-dangle': ['error', 'always-multiline'],
             'object-curly-spacing': ['error', 'always'],
             'array-bracket-spacing': ['error', 'never'],
             'no-empty': 'off',
@@ -30,24 +30,24 @@ export default defineConfig([
                     format: ['PascalCase'],
                     custom: {
                         regex: '^I[A-Z]',
-                        match: true,
-                    },
-                },
-            ],
-        },
+                        match: true
+                    }
+                }
+            ]
+        }
     },
     tseslint.configs.recommended,
     {
         ...pluginReact.configs.flat.recommended,
         rules: {
             ...pluginReact.configs.flat.recommended.rules,
-            'react/react-in-jsx-scope': 'off',
-        },
+            'react/react-in-jsx-scope': 'off'
+        }
     },
     {
         rules: {
             '@typescript-eslint/no-namespace': 'off',
-            '@typescript-eslint/no-explicit-any': 'off',
-        },
-    },
+            '@typescript-eslint/no-explicit-any': 'off'
+        }
+    }
 ]);
