@@ -3,7 +3,6 @@ import { Alert, TextInput, View } from 'react-native';
 import { Controller, useFormContext } from 'react-hook-form';
 import { isAxiosError } from 'axios';
 
-import { AuthService } from '@app/services/AuthService';
 import { ErrorCode } from '@app/types/ErrorCode';
 
 import { Button } from '@ui/components/Button';
@@ -18,19 +17,20 @@ import {
     StepTitle,
 } from '../components/Step';
 import type { OnboardingSchema } from '../schema';
+import { useAuth } from '@app/contexts/AuthContext/useAuth';
 
 export function CreateAccountStep() {
     const emailInputRef = useRef<TextInput>(null);
     const passwordInputRef = useRef<TextInput>(null);
     const confirmPasswordInputRef = useRef<TextInput>(null);
-
     const form = useFormContext<OnboardingSchema>();
+    const { signUp } = useAuth();
 
     const handleSubmit = form.handleSubmit(async (data) => {
         try {
             const birthDate = data.birthDate.toISOString().split('T')[0];
 
-            const response = await AuthService.signUp({
+            await signUp({
                 account: {
                     email: data.account.email,
                     password: data.account.password,
@@ -116,7 +116,6 @@ export function CreateAccountStep() {
                                     }
                                     value={field.value}
                                     onChangeText={field.onChange}
-                                    disabled={form.formState.isSubmitting}
                                     disabled={form.formState.isSubmitting}
                                 />
                             </FormGroup>

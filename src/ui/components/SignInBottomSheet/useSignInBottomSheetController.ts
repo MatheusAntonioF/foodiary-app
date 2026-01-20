@@ -8,8 +8,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import type { ISignInBottomSheet } from './ISignInBottomSheet';
 import { signInSchema } from './schema';
-import { AuthService } from '@app/services/AuthService';
 import { isAxiosError } from 'axios';
+import { useAuth } from '@app/contexts/AuthContext/useAuth';
 
 export function useSignInBottomSheetController(
     ref: React.Ref<ISignInBottomSheet>
@@ -17,12 +17,13 @@ export function useSignInBottomSheetController(
     const bottomSheetModalRef = useRef<BottomSheetModal>(null);
     const { bottom } = useSafeAreaInsets();
     const passwordInputRef = useRef<TextInput>(null);
+    const { signIn } = useAuth();
 
     const form = useForm({
         resolver: zodResolver(signInSchema),
         defaultValues: {
-            email: '',
-            password: '',
+            email: 'mat@gmail.com',
+            password: '123123123',
         },
     });
 
@@ -38,8 +39,7 @@ export function useSignInBottomSheetController(
 
     const handleSubmit = form.handleSubmit(async (data) => {
         try {
-            const response = await AuthService.signIn(data);
-            console.log(response);
+            await signIn(data);
         } catch (error) {
             if (isAxiosError(error)) {
                 Alert.alert('Oops!', 'As credenciais informadas são inválidas');
