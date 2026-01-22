@@ -17,6 +17,7 @@ interface ISetupAuthParams {
 
 export function AuthProvider({ children }: { children: ReactNode }) {
     const [isReady, setIsReady] = useState(false);
+    const [signedUp, setSignedUp] = useState(false);
 
     const { account, loadAccount } = useAccount({ enabled: false });
     const queryClient = useQueryClient();
@@ -82,6 +83,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     const signUp = useCallback(async (payload: AuthService.SignUpPayload) => {
         const tokens = await AuthService.signUp(payload);
+
+        setSignedUp(true);
         await setupAuth(tokens);
         await AuthTokensManager.save(tokens);
     }, []);
@@ -92,7 +95,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
     return (
         <AuthContext.Provider
-            value={{ signedIn: !!account, signIn, signUp, signOut }}
+            value={{ signedIn: !!account, signIn, signUp, signOut, signedUp }}
         >
             {children}
         </AuthContext.Provider>

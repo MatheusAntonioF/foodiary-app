@@ -1,20 +1,71 @@
-import { useAuth } from '@app/contexts/AuthContext/useAuth';
-import { useAccount } from '@app/hooks/queries/useAccount';
-import { AppText } from '@ui/components/AppText';
-import { Button } from '@ui/components/Button';
-import { View } from 'react-native';
+import { useState } from 'react';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { FlatList, RefreshControl, View } from 'react-native';
+
+import { useMeals } from '@app/hooks/queries/useMeals';
+import { theme } from '@ui/styles/theme';
+import { WelcomeModal } from '@ui/components/WelcomeModal';
+
+import { styles } from './styles';
+import { Header } from './components/Header';
+import { MealCard } from './components/MealCard';
+import { EmptyState } from './components/EmptyState';
+import { FullScreenLoader } from './components/FullScreenLoader';
+import { ItemSeparatorComponent } from './components/ItemSeparatorComponent';
+import { useHomeController } from './useHomeController';
+import { HomeContext } from './context';
+import { HomeProvider } from './context/HomeProvider';
 
 export function Home() {
-    const { signOut } = useAuth();
+    const {
+        bottom,
+        date,
+        isRefreshing,
+        meals,
+        top,
+        isInitialLoading,
+        isLoading,
+        handleNextDay,
+        handlePreviousDay,
+        handleRefresh,
+    } = useHomeController();
 
-    const { account } = useAccount();
+    if (isInitialLoading) {
+        return <FullScreenLoader />;
+    }
 
     return (
-        <View
-            style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}
-        >
-            <AppText>Bem-vindo {account?.profile.name}</AppText>
-            <Button onPress={signOut}>Sair</Button>
+        <View style={[styles.container, { paddingTop: top }]}>
+            <WelcomeModal />
+
+            <HomeProvider
+                date={date}
+                meals={meals}
+                nextDay={handleNextDay}
+                previousDay={handlePreviousDay}
+                isLoading={isLoading}
+            >
+                <FlatList
+                    data={meals}
+                    keyExtractor={(item) => item.id}
+                    contentContainerStyle={[
+                        styles.content,
+                        { paddingBottom: bottom + 24 },
+                    ]}
+                    ListHeaderComponent={Header}
+                    ListEmptyComponent={EmptyState}
+                    ItemSeparatorComponent={ItemSeparatorComponent}
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={isRefreshing}
+                            onRefresh={handleRefresh}
+                            tintColor={theme.colors.lime[900]}
+                            colors={[theme.colors.lime[700]]}
+                        />
+                    }
+                    renderItem={({ item: meal }) => <MealCard meal={meal} />}
+                />
+            </HomeProvider>
         </View>
     );
 }

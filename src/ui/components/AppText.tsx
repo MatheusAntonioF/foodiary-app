@@ -1,10 +1,11 @@
-import { Text } from 'react-native';
+import { Text, type TextStyle } from 'react-native';
 import { theme } from '@ui/styles/theme';
 
 interface IAppTextProps extends React.ComponentProps<typeof Text> {
     size?: keyof typeof theme.fontSize;
     family?: keyof typeof theme.fontFamily;
     weight?: keyof typeof theme.fontFamily.sans;
+    align?: TextStyle['textAlign'];
     color?: string;
 }
 
@@ -14,6 +15,7 @@ export function AppText({
     weight = 'regular',
     color = theme.colors.black[700],
     style,
+    align = 'left',
     ...props
 }: IAppTextProps) {
     return (
@@ -23,6 +25,7 @@ export function AppText({
                     fontFamily: theme.fontFamily[family][weight],
                     fontSize: theme.fontSize[size],
                     color,
+                    textAlign: align,
                 },
                 style,
             ]}
