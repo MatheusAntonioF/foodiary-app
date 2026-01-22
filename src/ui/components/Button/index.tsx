@@ -39,7 +39,10 @@ export function Button({
         <View style={styles.wrapper}>
             <Pressable
                 disabled={disabled}
-                android_ripple={{ color: 'rgba(0, 0, 0, 0.1)' }}
+                android_ripple={{
+                    color: 'rgba(0, 0, 0, 0.1)',
+                    foreground: true,
+                }}
                 style={({ pressed }) => [
                     buttonStyles({
                         variant,

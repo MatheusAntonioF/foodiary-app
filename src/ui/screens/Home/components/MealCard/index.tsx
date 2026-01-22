@@ -45,7 +45,10 @@ export function MealCard({ meal }: IMealCardProps) {
             <View style={styles.wrapper}>
                 <Pressable
                     disabled={isLoading}
-                    android_ripple={{ color: 'rgba(0, 0, 0, 0.1)' }}
+                    android_ripple={{
+                        color: 'rgba(0, 0, 0, 0.1)',
+                        foreground: true,
+                    }}
                     style={({ pressed }) => [
                         styles.card,
                         pressed &&

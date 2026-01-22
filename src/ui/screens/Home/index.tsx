@@ -1,8 +1,5 @@
-import { useState } from 'react';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { FlatList, RefreshControl, View } from 'react-native';
 
-import { useMeals } from '@app/hooks/queries/useMeals';
 import { theme } from '@ui/styles/theme';
 import { WelcomeModal } from '@ui/components/WelcomeModal';
 
@@ -13,7 +10,6 @@ import { EmptyState } from './components/EmptyState';
 import { FullScreenLoader } from './components/FullScreenLoader';
 import { ItemSeparatorComponent } from './components/ItemSeparatorComponent';
 import { useHomeController } from './useHomeController';
-import { HomeContext } from './context';
 import { HomeProvider } from './context/HomeProvider';
 
 export function Home() {
