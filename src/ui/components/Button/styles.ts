@@ -32,6 +32,9 @@ export const buttonStyles = createVariants({
             ghost: {
                 backgroundColor: 'transparent',
             },
+            neutral: {
+                backgroundColor: theme.colors.lime['700/5'],
+            },
         },
         size: {
             default: {

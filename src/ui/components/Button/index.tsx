@@ -14,6 +14,7 @@ interface IButtonProps
         Omit<ButtonVariants, 'disabled'> {
     isLoading?: boolean;
     leftIcon?: LucideIcon;
+    rippleStyle?: 'light' | 'dark';
 }
 
 export function Button({
@@ -24,6 +25,7 @@ export function Button({
     style,
     isLoading = false,
     leftIcon: LeftIcon,
+    rippleStyle = 'dark',
     ...props
 }: IButtonProps) {
     const disabled = disabledProp || isLoading;
@@ -40,8 +42,11 @@ export function Button({
             <Pressable
                 disabled={disabled}
                 android_ripple={{
-                    color: 'rgba(0, 0, 0, 0.1)',
                     foreground: true,
+                    color:
+                        rippleStyle === 'dark'
+                            ? 'rgba(0, 0, 0, 0.1)'
+                            : 'rgba(255, 255, 255, 0.1)',
                 }}
                 style={({ pressed }) => [
                     buttonStyles({
