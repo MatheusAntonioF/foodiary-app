@@ -11,9 +11,10 @@ import {
 import { Button } from '@ui/components/Button';
 import { theme } from '@ui/styles/theme';
 
-import { styles } from './styles';
 import { AppText } from '@ui/components/AppText';
 import { CreateMealOptions } from '@ui/components/CreateMealOptions';
+
+import { styles } from './styles';
 
 export function Fab() {
     const bottomSheetModalRef = useRef<BottomSheetModal>(null);
@@ -46,7 +47,11 @@ export function Fab() {
                             Cadastre sua refeição
                         </AppText>
 
-                        <CreateMealOptions />
+                        <CreateMealOptions
+                            onCreate={() => {
+                                bottomSheetModalRef.current?.dismiss();
+                            }}
+                        />
                     </BottomSheetView>
                 </BottomSheetModal>
             </BottomSheetModalProvider>

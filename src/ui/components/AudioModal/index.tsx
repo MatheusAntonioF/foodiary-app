@@ -24,7 +24,7 @@ export function AudioModal({ visible, onClose }: IAudioModalProps) {
         handleStopRecording,
         handleTryAgain,
         handleConfirm,
-    } = useAudioModalController();
+    } = useAudioModalController({ onClose });
 
     const isRecording = state === 'recording';
 

@@ -1,5 +1,5 @@
 import { Service } from './Service';
-import type { Meal } from '@app/types/Meal';
+import type { Meal, SimplifiedMeal } from '@app/types/Meal';
 
 export class MealsService extends Service {
     static async getMealsByDate(
@@ -22,6 +22,43 @@ export class MealsService extends Service {
             })),
         };
     }
+
+    static async getMealById(
+        id: string
+    ): Promise<MealsService.GetMealIdResponse> {
+        const { data } = await this.client.get<MealsService.GetMealIdResponse>(
+            `/meals/${id}`
+        );
+
+        return {
+            meal: {
+                ...data.meal,
+                createdAt: new Date(data.meal.createdAt),
+            },
+        };
+    }
+
+    static async createMeal(
+        payload: MealsService.CreateMealPayload
+    ): Promise<MealsService.CreateMealResponse> {
+        const { data } = await this.client.post<{
+            uploadSignature: string;
+            mealId: string;
+        }>('/meals', payload);
+
+        await this.uploadPresignedPOST({
+            uploadSignature: data.uploadSignature,
+            file: {
+                type: payload.file.type,
+                uri: payload.file.uri,
+                name: payload.file.name,
+            },
+        });
+
+        return {
+            mealId: data.mealId,
+        };
+    }
 }
 export namespace MealsService {
     export type GetMe = {
@@ -30,6 +67,23 @@ export namespace MealsService {
     };
 
     export type GetMealsByDateResponse = {
-        meals: Meal[];
+        meals: SimplifiedMeal[];
+    };
+
+    export type CreateMealPayload = {
+        file: {
+            type: 'audio/m4a' | 'image/jpeg';
+            size: number;
+            uri: string;
+            name: string;
+        };
+    };
+
+    export type CreateMealResponse = {
+        mealId: string;
+    };
+
+    export type GetMealIdResponse = {
+        meal: Meal;
     };
 }

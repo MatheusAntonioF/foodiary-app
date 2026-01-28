@@ -12,20 +12,23 @@ import { PictureModal } from '../PictureModal';
 
 interface ICreateMealOptionsProps {
     disabled?: boolean;
+    onCreate?: () => void;
 }
 
 export function CreateMealOptions({
     disabled = false,
+    onCreate,
 }: ICreateMealOptionsProps) {
     const [currentVisibleModal, setCurrentVisibleModal] = useState<
         null | 'audio' | 'picture'
-    >('picture');
+    >(null);
 
     function handleOpenModal(modal: 'audio' | 'picture') {
         setCurrentVisibleModal(modal);
     }
 
     function handleCloseModal() {
+        if (onCreate) onCreate();
         setCurrentVisibleModal(null);
     }
 

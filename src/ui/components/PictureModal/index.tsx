@@ -15,7 +15,7 @@ import { Button } from '../Button';
 import { AppText } from '../AppText';
 import { CreateMealLoader } from '../CreateMealLoader';
 
-import { usePictureModalController } from './useAudioModalController';
+import { usePictureModalController } from './usePictureModalController';
 import { styles } from './styles';
 
 interface IPictureModalProps {
@@ -33,7 +33,7 @@ export function PictureModal({ visible, onClose }: IPictureModalProps) {
         handleTakePicture,
         handleTryAgain,
         handleConfirm,
-    } = usePictureModalController();
+    } = usePictureModalController({ onClose });
 
     return (
         <Modal
